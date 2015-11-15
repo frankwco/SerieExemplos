@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+        <ui:include src="ajaxLoader.xhtml"/>
+    </h:head>
+    <h:body>
+     
+        <h:link outcome="index" value="Página Inicial" /><br/><br/>
+
+        <h:form id="formTabela">
+            <p:commandButton value="Nova Cidade" oncomplete="PF('dialogCadastroCidade').show();"
+                             update=":formCadastroCidade"
+                             actionListener="#{controleCidade.criarNovoObjetoCidade()}"/>
+
+            <p:dataTable value="#{controleCidade.listaCidade}" var="obj">
+
+                <p:column filterBy="#{obj.id}" headerText="ID">
+                    <h:outputText value="#{obj.id}"/>
+                </p:column>
+
+                <p:column filterBy="#{obj.nome}" filterMatchMode="contains" headerText="Nome Cidade">
+                    <h:outputText value="#{obj.nome}"/>
+                </p:column>
+
+                <p:column filterBy="#{obj.estado.nome}" 
+                          filterMatchMode="contains" headerText="Nome Cidade">
+                    <h:outputText value="#{obj.estado.nome}"/>
+                </p:column>
+
+                <p:column>
+                    <p:commandButton icon="ui-icon-circle-close"  oncomplete="PF('dialogCadastroCidade').show();"
+                                     update=":formCadastroCidade">
+                        <f:setPropertyActionListener value="#{obj}" target="#{controleCidade.objCidade}"/>
+                    </p:commandButton>
+                </p:column>
+
+                <p:column>
+                    <p:commandLink value="Excluir" actionListener="#{controleCidade.excluirCidade(obj)}" 
+                                   update="@form">
+                        <p:confirm header="Confirmation" message="Deseja Excluir?" icon="ui-icon-alert" />
+                    </p:commandLink>
+                </p:column>
+
+            </p:dataTable>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+        </h:form>
+        <p:dialog widgetVar="dialogCadastroCidade" width="400" height="200">
+            <h:form id="formCadastroCidade">
+                <h:panelGrid columns="2">
+                    <h:outputText value="Cidade:"/>  
+                    <p:inputText value="#{controleCidade.objCidade.nome}"/>
+                    <h:outputText value="Estado:"/>  
+                    <p:selectOneMenu converter="converterEstados" 
+                                     value="#{controleCidade.objCidade.estado}">
+                        <f:selectItems value="#{controleCidade.listaEstados}"
+                                       var="est" itemLabel="#{est.nome} - #{est.sigla}"
+                                       itemValue="#{est}"/>
+
+                    </p:selectOneMenu>
+
+                    <p:commandButton value="Inserir" actionListener="#{controleCidade.inserirCidade()}"
+                                     oncomplete="PF('dialogCadastroCidade').hide()"
+                                     update=":formTabela"/>
+                </h:panelGrid> 
+            </h:form>
+        </p:dialog>
+
+    </h:body>
+</html>
+

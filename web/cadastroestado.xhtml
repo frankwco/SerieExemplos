@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+        <ui:include src="dialogEstado.xhtml"/>
+        <ui:include src="ajaxLoader.xhtml"/>
+    </h:head>
+    <h:body>
+       <h:link outcome="index" value="Página Inicial" /><br/><br/>
+
+        <h:form id="formTabela">
+            <p:commandButton value="Novo Estado" oncomplete="PF('dialogCadastroEstado').show();"
+                             update=":formCadastroEstado"
+                             actionListener="#{controleEstado.criarNovoObjetoEstado()}"/>
+
+            <p:dataTable id="tabelaEstado" value="#{controleEstado.listaEstado}" var="obj">
+                
+                <p:column filterBy="#{obj.id}" headerText="ID">
+                    <h:outputText value="#{obj.id}"/>
+                </p:column>
+
+                <p:column filterBy="#{obj.nome}" footerText="contains" filterMatchMode="contains" headerText="Nome">
+                    <h:outputText value="#{obj.nome}"/>
+                </p:column>
+                
+                <p:column headerText="Sigla">
+                    <h:outputText value="#{obj.sigla}"/>
+                </p:column>
+
+                <p:column>
+                    <p:commandButton icon="ui-icon-circle-close"  oncomplete="PF('dialogCadastroEstado').show();"
+                                     update=":formCadastroEstado">
+                        <f:setPropertyActionListener value="#{obj}" target="#{controleEstado.objEstado}"/>
+                    </p:commandButton>
+                </p:column>
+
+                <p:column>
+                    <p:commandLink value="Excluir" actionListener="#{controleEstado.excluirEstado(obj)}" 
+                                     update="@form">
+                        <p:confirm header="Confirmation" message="Deseja Excluir?" icon="ui-icon-alert" />
+                    </p:commandLink>
+                </p:column>
+
+            </p:dataTable>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+        </h:form>
+       
+    </h:body>
+</html>
+

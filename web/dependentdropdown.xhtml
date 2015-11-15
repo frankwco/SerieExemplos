@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+        <ui:include src="ajaxLoader.xhtml"/>
+        <style type="text/css">
+            p{
+                color: red;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <h:link outcome="index" value="Página Inicial" /><br/><br/>
+        
+        <p>No primeiro selectOneMenu é escolhido o estado, e de acordo com o estado escolhido
+        as cidades são carregadas.</p>
+        <p>No Managed Bean controleDropdown tem um método (filtrarCidades()) para filtrar as cidades de acordo com 
+        o estado escolhid.o</p>
+        <p>Lembre-se que, como estamos trabalhando com selectOneMenu e com objetos, é necessários
+        os converters, neste projeto eles estão no pacote útil.</p>
+        <br/>
+        <h:form>
+            <p:growl id="msgs" showDetail="true" />
+            <p:panel header="Selecionar uma cidade" style="margin-bottom:10px;">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <p:outputLabel for="estado" value="Estado: " />
+                    <p:selectOneMenu converter="converterEstados" id="estado" value="#{controleDropdown.estadoSelecionado}" style="width:150px">
+                        <p:ajax listener="#{controleDropdown.filtrarCidades()}" update="cidades"/>
+                        <f:selectItem itemLabel="Selecione um Estado" noSelectionOption="true" />
+                        <f:selectItems value="#{controleDropdown.listaEstado}" var="est" itemValue="#{est}" itemLabel="#{est.nome}" />
+                    </p:selectOneMenu>
+
+                    <p:outputLabel for="cidades" value="Cidade: " />
+                    <p:selectOneMenu converter="converterCidade" id="cidades" value="#{controleDropdown.cidadeSelecionada}" style="width:150px">
+                        <!--<f:selectItem itemLabel="Selecione uma Cidade" itemValue="" noSelectionOption="true" />-->
+                        <f:selectItems value="#{controleDropdown.listaCidade}" var="cid" itemValue="#{cid}" itemLabel="#{cid.nome}" />
+                    </p:selectOneMenu>
+
+               
+
+
+                </h:panelGrid>
+
+                <p:separator />
+
+                <p:commandButton value="Mostar Selecionados" update="msgs" actionListener="#{controleDropdown.mostrarCidadeEstadoSelecionados()}" icon="ui-icon-check" />
+            </p:panel>
+        </h:form>
+    </h:body>
+</html>
+
