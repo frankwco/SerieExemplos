@@ -5,17 +5,26 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-      
+
     </h:head>
     <h:body>
         <p:dialog widgetVar="dialogCadastroEstado" width="400" height="200">
             <h:form id="formCadastroEstado">
-                <p:inputText value="#{controleEstado.objEstado.nome}"/>
+                <p:inputText converter="converterDouble" required="true" requiredMessage="Nome Obrigatório" value="#{controleEstado.objEstado.nome}"/>
                 <p:inputText value="#{controleEstado.objEstado.sigla}"/>
                 <p:commandButton value="Inserir" actionListener="#{controleEstado.inserirEstado()}"
-                                 oncomplete="PF('dialogCadastroEstado').hide()"
+                                 oncomplete="handleComplete(xhr, status, args)"
                                  update=":formTabela, :formTabela:growEstado"/>
             </h:form>
+            <script type="text/javascript">
+                function handleComplete(xhr, status, args) {
+                    if (args.validationFailed) {
+                        //alert("Campos obrigatorios");
+                    } else {
+                        PF('dialogCadastroEstado').hide();
+                    }
+                }
+            </script>
         </p:dialog>
 
     </h:body>

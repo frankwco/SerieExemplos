@@ -46,13 +46,9 @@ public class ControleEstado implements Serializable {
             try {
                 dao.exluir(objEstado);
             } catch (Exception ex) {
-
                 LastException lastException = new LastException();
                 Throwable th = lastException.findLastException(ex);
-
-                System.out.println("Testesss: " + new DatabaseException((Exception) th).getMessage());
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Erro!!", new DatabaseException((Exception) th).getMessage()));
-
             }
         }
         criarNovoObjetoEstado();
@@ -65,17 +61,15 @@ public class ControleEstado implements Serializable {
 
     public void inserirEstado() {
         if (objEstado.getId() == null) {
-            try{
-                 dao.inserir(objEstado);
-            }catch(Exception ex){
-                 LastException lastException = new LastException();
+            try {
+                dao.inserir(objEstado);
+            } catch (Exception ex) {
+                LastException lastException = new LastException();
                 Throwable th = lastException.findLastException(ex);
-
-                System.out.println("Testesss: " + new DatabaseException((Exception) th).getMessage());
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Erro!!", new DatabaseException((Exception) th).getMessage()));
 
             }
-           
+
         } else {
             dao.salvar(objEstado);
         }
