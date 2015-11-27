@@ -12,19 +12,12 @@
             <h:form id="formCadastroEstado">
                 <p:inputText converter="converterDouble" required="true" requiredMessage="Nome Obrigatório" value="#{controleEstado.objEstado.nome}"/>
                 <p:inputText value="#{controleEstado.objEstado.sigla}"/>
+                <p:inputText converter="converterDouble" value="#{controleEstado.objEstado.tamanho}"/>
                 <p:commandButton value="Inserir" actionListener="#{controleEstado.inserirEstado()}"
-                                 oncomplete="handleComplete(xhr, status, args)"
+                                 oncomplete="handleComplete(xhr, status, args, 'dialogCadastroEstado')"
                                  update=":formTabela, :formTabela:growEstado"/>
             </h:form>
-            <script type="text/javascript">
-                function handleComplete(xhr, status, args) {
-                    if (args.validationFailed) {
-                        //alert("Campos obrigatorios");
-                    } else {
-                        PF('dialogCadastroEstado').hide();
-                    }
-                }
-            </script>
+            <script type="text/javascript" src="js/script.js"></script>
         </p:dialog>
 
     </h:body>

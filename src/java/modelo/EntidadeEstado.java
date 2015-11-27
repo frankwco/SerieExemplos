@@ -31,7 +31,16 @@ public class EntidadeEstado implements Serializable {
     @Column(nullable = false)
     private String sigla;
     
+    private Double tamanho;
+
+    public Double getTamanho() {
+        return tamanho;
+    }
+
     //Adicionar os gets e sets
+    public void setTamanho(Double tamanho) {
+        this.tamanho = tamanho;
+    }
 
     public String getNome() {
         return nome;

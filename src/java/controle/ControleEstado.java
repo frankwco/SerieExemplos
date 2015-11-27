@@ -39,6 +39,7 @@ public class ControleEstado implements Serializable {
         dao = new DAOGenerico();
         preencherListaEstado();
     }
+    
 
     public void excluirEstado(EntidadeEstado est) {
         objEstado = est;
