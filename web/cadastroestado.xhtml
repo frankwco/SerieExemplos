@@ -12,8 +12,10 @@
     </h:head>
     <h:body>
        <h:link outcome="index" value="Página Inicial" /><br/><br/>
-
+      
         <h:form id="formTabela">
+             <p:growl id="growEstado"  life="5000" showDetail="true"/>
+            
             <p:commandButton value="Novo Estado" oncomplete="PF('dialogCadastroEstado').show();"
                              update=":formCadastroEstado"
                              actionListener="#{controleEstado.criarNovoObjetoEstado()}"/>

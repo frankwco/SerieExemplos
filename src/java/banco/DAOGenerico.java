@@ -46,8 +46,12 @@ public class DAOGenerico {
             em.persist(marca);
             em.getTransaction().commit();
         } catch (Exception e) {
+            if (!em.getTransaction().isActive()) {
+                em.getTransaction().begin();
+            }
             em.getTransaction().rollback();
             e.printStackTrace();
+            throw e;
         }
     }
 
@@ -56,24 +60,22 @@ public class DAOGenerico {
         try {
             em = Banco.getInstancia().getEm();
             et = em.getTransaction();
-//            if (!em.getTransaction().isActive()) {
-//                em.getTransaction().begin();
-//            }
             if (!et.isActive()) {
                 et.begin();
             }
             Method getChave = objeto.getClass().getMethod("getId", new Class[0]);
             objeto = em.find(objeto.getClass(), getChave.invoke(objeto, new Object[0]));
             em.remove(objeto);
-//            em.getTransaction().commit();
+
             et.commit();
         } catch (Exception e) {
-            System.out.println("caiu no rollback antes");
-//            em.getTransaction().rollback();
 
-            et.rollback();
-            System.out.println("caiu no rollback depois");
+            if (!em.getTransaction().isActive()) {
+                em.getTransaction().begin();
+            }
+            em.getTransaction().rollback();
             e.printStackTrace();
+            throw e;
         }
 
     }

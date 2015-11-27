@@ -26,7 +26,9 @@ public class EntidadeEstado implements Serializable {
     @Column(name="idEstado")
     private Long id;
     
+    @Column(unique = true)
     private String nome;
+    @Column(nullable = false)
     private String sigla;
     
     //Adicionar os gets e sets

@@ -14,7 +14,7 @@
                 <p:inputText value="#{controleEstado.objEstado.sigla}"/>
                 <p:commandButton value="Inserir" actionListener="#{controleEstado.inserirEstado()}"
                                  oncomplete="PF('dialogCadastroEstado').hide()"
-                                 update=":formTabela"/>
+                                 update=":formTabela, :formTabela:growEstado"/>
             </h:form>
         </p:dialog>
 

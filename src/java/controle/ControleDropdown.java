@@ -32,8 +32,8 @@ public class ControleDropdown implements Serializable {
     private EntidadeEstado estadoSelecionado;
     private EntidadeCidade cidadeSelecionada;
 
-    @PostConstruct
-    public void init() {
+  
+    public ControleDropdown() {
         dao = new DAOGenerico();
         listaCidade = new ArrayList<>();
         listaEstado = new ArrayList<>();
