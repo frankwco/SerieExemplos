@@ -10,9 +10,10 @@
     <h:body>
         <p:dialog widgetVar="dialogCadastroEstado" width="400" height="200">
             <h:form id="formCadastroEstado">
-                <p:inputText converter="converterDouble" required="true" requiredMessage="Nome Obrigatório" value="#{controleEstado.objEstado.nome}"/>
-                <p:inputText value="#{controleEstado.objEstado.sigla}"/>
-                <p:inputText converter="converterDouble" value="#{controleEstado.objEstado.tamanho}"/>
+                Nome: <p:inputText converter="converterDouble" required="true" requiredMessage="Nome Obrigatório" value="#{controleEstado.objEstado.nome}"/><br/>
+                
+                Sigla:<p:inputText value="#{controleEstado.objEstado.sigla}"/><br/>
+                Tamanho:<p:inputText converter="converterDouble" value="#{controleEstado.objEstado.tamanho}"/><br/>
                 <p:commandButton value="Inserir" actionListener="#{controleEstado.inserirEstado()}"
                                  oncomplete="handleComplete(xhr, status, args, 'dialogCadastroEstado')"
                                  update=":formTabela, :formTabela:growEstado"/>
